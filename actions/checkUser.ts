@@ -22,7 +22,7 @@ const checkUser = async (email: string, password: string) => {
 
 		if (user) {
 			if (await bcrypt.compare(password, user.password)) {
-				const token = jwt.sign(user.id, "secret" as Secret);
+				const token = jwt.sign(user.id, process.env.JWT_SUPER_SECRET as Secret);
 				return { user, token };
 			} else {
 				return "Invalid credentials" as string;

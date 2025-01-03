@@ -31,21 +31,23 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({
 	children,
 }) => {
 	const [user, setUser] = useState<User | null>(null);
-	const token = global.document?.cookie?.split("=")[1];
+	const token = global.document?.cookie?.split("token=")[1];
 
 	//setting user data after refresh
 	const gettingData = async () => {
-		if (token) {
+		if (!!token) {
 			const user: any = await decodToken(token);
-			setUser({
-				id: user?.id,
-				username: user?.username,
-				email: user?.email,
-				isAdmin: user?.role === "admin",
-				completedProblems: user?.completedProblems?.map(
-					(problem: any) => problem.id
-				),
-			});
+			if (!!user?.id) {
+				setUser({
+					id: user?.id,
+					username: user?.username,
+					email: user?.email,
+					isAdmin: user?.role === "admin",
+					completedProblems: user?.completedProblems?.map(
+						(problem: any) => problem.id
+					),
+				});
+			}
 		}
 	};
 
