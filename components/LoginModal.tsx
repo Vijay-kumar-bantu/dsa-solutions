@@ -38,6 +38,7 @@ export const LoginModal: React.FC<LoginModalProps> = ({ isOpen, onClose }) => {
 					: "Please wait, registration in progress..."
 			);
 		}
+		//eslint-disable-next-line react-hooks/exhaustive-deps
 	}, [loading]);
 
 	const handleSubmit = async (e: React.FormEvent) => {
