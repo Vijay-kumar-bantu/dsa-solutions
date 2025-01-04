@@ -1,9 +1,10 @@
 "use client";
 
-import { useState } from "react";
-import { problems } from "@/data/problems";
+import { useEffect, useState } from "react";
 import { ProblemRow } from "./ProblemRow";
 import { Search } from "lucide-react";
+import { Problem } from "@/types";
+import getAllProblems from "@/actions/getAllProblems";
 
 interface ProblemListProps {
 	// eslint-disable-next-line  @typescript-eslint/no-explicit-any
@@ -11,7 +12,16 @@ interface ProblemListProps {
 }
 
 export const ProblemList = ({ onEdit }: ProblemListProps) => {
+	const [problems, setProblems] = useState<Problem[]>([]);
 	const [search, setSearch] = useState("");
+
+	useEffect(() => {
+		//eslint-disable-next-line
+		//@ts-ignore
+		getAllProblems().then((data) => setProblems(data));
+
+		//eslint-disable-next-line react-hooks/exhaustive-deps
+	}, []);
 
 	const filteredProblems = problems.filter((problem) =>
 		problem.title.toLowerCase().includes(search.toLowerCase())

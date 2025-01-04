@@ -17,7 +17,7 @@ export const SolutionCard = ({ solution, onEdit }: SolutionCardProps) => {
 				</h4>
 				<div
 					onClick={onEdit}
-					className="p-1 text-gray-500 hover:text-primary-600 dark:text-gray-400 dark:hover:text-primary-400"
+					className="p-1 text-gray-500 hover:text-primary-600 dark:text-gray-400 dark:hover:text-primary-400 cursor-pointer"
 				>
 					<Edit2 className="w-4 h-4" />
 				</div>

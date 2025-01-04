@@ -32,11 +32,13 @@ export const ProblemForm = ({ problem, onClose }: ProblemFormProps) => {
 		e.preventDefault();
 		// Handle form submission
 
-		if (await createProblem(formData)) {
-			alert("Problem created successfully");
-			onClose();
-		} else {
-			alert("Failed to create problem");
+		if (!problem) {
+			if (await createProblem(formData)) {
+				alert("Problem created successfully");
+				onClose();
+			} else {
+				alert("Failed to create problem");
+			}
 		}
 	};
 

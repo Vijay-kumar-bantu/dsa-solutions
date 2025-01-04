@@ -2,25 +2,29 @@
 
 import usePrisma from "@/hooks/usePrisma";
 
-const getAllProblems = async (dataset: string) => {
+const getAllProblems = async () => {
 	const prisma = usePrisma();
-	try {
-		const problems = await prisma.problem.findMany({
-			where: {
-				dataset: { has: dataset },
+	return await prisma.problem.findMany({
+		select: {
+			id: true,
+			title: true,
+			description: true,
+			dataset: true,
+			category: true,
+			difficulty: true,
+			leetcodeUrl: true,
+			youtubeUrl: true,
+			solutions: {
+				select: {
+					title: true,
+					explanation: true,
+					timeComplexity: true,
+					spaceComplexity: true,
+					implementations: true,
+				},
 			},
-			select: {
-				id: true,
-				title: true,
-				category: true,
-				difficulty: true,
-				completedBy: true,
-			},
-		});
-		return problems;
-	} catch (err) {
-		return [];
-	}
+		},
+	});
 };
 
 export default getAllProblems;

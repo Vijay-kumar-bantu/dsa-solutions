@@ -5,7 +5,7 @@ import { motion, AnimatePresence } from "framer-motion";
 import { ChevronDown, ChevronUp } from "lucide-react";
 import Link from "next/link";
 import { CompletionCheckbox } from "../CompletionCheckbox";
-import getAllProblems from "@/actions/getAllProblems";
+import getAllDatasetProblems from "@/actions/getAllDatasetProblems";
 import { notFound } from "next/navigation";
 import LoadingScreen from "../LoadingScreen";
 
@@ -27,7 +27,7 @@ const Blind75 = ({ setId }: PageProps) => {
 	const [openCategory, setOpenCategory] = useState<string | null>(null);
 
 	useEffect(() => {
-		getAllProblems(setId).then((data) => {
+		getAllDatasetProblems(setId).then((data) => {
 			setProblems(data);
 			setLoading(false);
 		});
