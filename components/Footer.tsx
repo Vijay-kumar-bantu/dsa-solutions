@@ -32,7 +32,7 @@ export const Footer = () => {
 					</div>
 				</div>
 				<div>
-					<p className="text-gray-600 dark:text-gray-400 text-center">
+					<p className="my-4 text-gray-600 dark:text-gray-400 text-center">
 						<Link href={"/admin"}>Developed By Vijay Kumar Bantu</Link>
 					</p>
 				</div>
