@@ -12,13 +12,13 @@ export const Footer = () => {
 					</p>
 					<div className="flex space-x-4 mt-4 md:mt-0">
 						<a
-							href="https://github.com"
+							href="https://github.com/Vijay-kumar-bantu/dsa-solutions"
 							className="text-gray-400 hover:text-gray-500 dark:hover:text-gray-300"
 						>
 							<Github className="w-5 h-5" />
 						</a>
 						<a
-							href="https://twitter.com"
+							href="https://www.linkedin.com/in/vijay-kumar-bantu/"
 							className="text-gray-400 hover:text-gray-500 dark:hover:text-gray-300"
 						>
 							<Linkedin className="w-5 h-5" />
