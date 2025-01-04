@@ -22,7 +22,7 @@ export default function Home() {
 						<Code2 className="w-20 h-20 mx-auto text-primary-600 dark:text-primary-400" />
 					</motion.div>
 					<h1 className="mt-8 text-4xl md:text-6xl font-bold text-gray-900 dark:text-white">
-						Master DSA with Blind 75
+						Unlock Your Path to DSA Mastery
 					</h1>
 					<p className="mt-6 text-xl text-gray-600 dark:text-gray-300 max-w-2xl mx-auto">
 						Comprehensive solutions and explanations for the most important
