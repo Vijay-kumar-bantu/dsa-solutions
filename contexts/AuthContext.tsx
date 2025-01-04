@@ -43,6 +43,7 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({
 					username: user?.username,
 					email: user?.email,
 					isAdmin: user?.role === "admin",
+					// eslint-disable-next-line  @typescript-eslint/no-explicit-any
 					completedProblems: user?.completedProblems?.map(
 						(problem: any) => problem.id
 					),
@@ -68,6 +69,7 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({
 				username: user.username,
 				email: user.email,
 				isAdmin: user.role === "admin",
+				// eslint-disable-next-line  @typescript-eslint/no-explicit-any
 				completedProblems: user.completedProblems.map((problem) => problem.id),
 			});
 		}
