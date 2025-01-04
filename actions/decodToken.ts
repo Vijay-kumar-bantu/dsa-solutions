@@ -11,7 +11,6 @@ const decodToken = async (token: string) => {
 			process.env.JWT_SUPER_SECRET as Secret
 		);
 		if (decode) {
-			console.log(decode);
 			const user = await prisma.user.findUnique({
 				where: {
 					id: decode as string,
