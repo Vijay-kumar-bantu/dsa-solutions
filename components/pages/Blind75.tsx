@@ -1,25 +1,45 @@
 "use client";
 
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { ChevronDown, ChevronUp } from "lucide-react";
 import Link from "next/link";
 import { CompletionCheckbox } from "../CompletionCheckbox";
+import getAllProblems from "@/actions/getAllProblems";
+import { notFound } from "next/navigation";
+import LoadingScreen from "../LoadingScreen";
 
 interface PageProps {
-	problems: {
-		id: string;
-		title: string;
-		difficulty: string;
-		category: string;
-		//need to develop
-		// completedBy?: string[];
-	}[];
+	setId: string;
 }
 
-const Blind75 = ({ problems }: PageProps) => {
+interface Problem {
+	id: string;
+	title: string;
+	difficulty: string;
+	category: string;
+}
+
+const Blind75 = ({ setId }: PageProps) => {
+	const [problems, setProblems] = useState<Problem[]>([]);
+	const [loading, setLoading] = useState(true);
 	const categories = Array.from(new Set(problems.map((p) => p.category)));
 	const [openCategory, setOpenCategory] = useState<string | null>(null);
+
+	useEffect(() => {
+		getAllProblems(setId).then((data) => {
+			setProblems(data);
+			setLoading(false);
+		});
+	}, [setId]);
+
+	if (loading) {
+		return <LoadingScreen />;
+	}
+
+	if (problems.length === 0) {
+		return notFound();
+	}
 
 	return (
 		<div className="min-h-screen bg-gray-50 dark:bg-gray-900 py-12">
