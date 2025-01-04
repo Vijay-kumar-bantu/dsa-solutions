@@ -19,8 +19,6 @@ export const ProblemList = ({ onEdit }: ProblemListProps) => {
 		//eslint-disable-next-line
 		//@ts-ignore
 		getAllProblems().then((data) => setProblems(data));
-
-		//eslint-disable-next-line react-hooks/exhaustive-deps
 	}, []);
 
 	const filteredProblems = problems.filter((problem) =>
