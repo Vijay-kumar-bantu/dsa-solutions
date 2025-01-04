@@ -9,7 +9,7 @@ interface LoginModalProps {
 }
 
 export const LoginModal: React.FC<LoginModalProps> = ({ isOpen, onClose }) => {
-	const { login, register } = useAuth();
+	const { login, register, loading } = useAuth();
 	const [isLogin, setIsLogin] = useState(true);
 	const [formData, setFormData] = useState({
 		username: "",
@@ -30,6 +30,16 @@ export const LoginModal: React.FC<LoginModalProps> = ({ isOpen, onClose }) => {
 		setError("");
 	}, [isOpen, isLogin]);
 
+	useEffect(() => {
+		if (loading) {
+			setError(
+				isLogin
+					? "Please wait, authentication in progress..."
+					: "Please wait, registration in progress..."
+			);
+		}
+	}, [loading]);
+
 	const handleSubmit = async (e: React.FormEvent) => {
 		e.preventDefault();
 		setError("");
@@ -37,14 +47,15 @@ export const LoginModal: React.FC<LoginModalProps> = ({ isOpen, onClose }) => {
 		try {
 			if (isLogin) {
 				await login(formData.email, formData.password);
+				onClose();
 			} else {
 				if (formData.password !== formData.confirmPassword) {
 					setError("Passwords do not match");
 					return;
 				}
 				await register(formData.username, formData.email, formData.password);
+				setIsLogin(true);
 			}
-			onClose();
 			// eslint-disable-next-line  @typescript-eslint/no-explicit-any
 		} catch (error: any) {
 			setError(error.message || "Authentication failed. Please try again.");

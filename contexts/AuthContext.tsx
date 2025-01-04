@@ -23,6 +23,7 @@ interface AuthContextType {
 	) => Promise<void>;
 	logout: () => void;
 	isAuthenticated: boolean;
+	loading: boolean;
 }
 
 const AuthContext = createContext<AuthContextType | undefined>(undefined);
@@ -31,11 +32,13 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({
 	children,
 }) => {
 	const [user, setUser] = useState<User | null>(null);
+	const [loading, setLoading] = useState(false);
 	const token = global.document?.cookie?.split("token=")[1];
 
 	//setting user data after refresh
 	const gettingData = async () => {
 		if (!!token) {
+			setLoading(true);
 			const user: any = await decodToken(token);
 			if (!!user?.id) {
 				setUser({
@@ -49,6 +52,7 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({
 					),
 				});
 			}
+			setLoading(false);
 		}
 	};
 
@@ -57,9 +61,11 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({
 	}, []);
 
 	const login = async (email: string, password: string) => {
+		setLoading(true);
 		const data = await checkUser(email, password);
 
 		if (typeof data == "string") {
+			setLoading(false);
 			throw new Error(data);
 		} else {
 			const { user, token } = data;
@@ -72,6 +78,7 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({
 				// eslint-disable-next-line  @typescript-eslint/no-explicit-any
 				completedProblems: user.completedProblems.map((problem) => problem.id),
 			});
+			setLoading(false);
 		}
 	};
 
@@ -80,9 +87,12 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({
 		email: string,
 		password: string
 	) => {
+		setLoading(true);
 		if (await addUser(username, email, password)) {
+			setLoading(false);
 			alert("User profile created successfully");
 		} else {
+			setLoading(false);
 			throw new Error("something went wrong,Please try again later");
 		}
 	};
@@ -100,6 +110,7 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({
 				register,
 				logout,
 				isAuthenticated: !!user,
+				loading,
 			}}
 		>
 			{children}
