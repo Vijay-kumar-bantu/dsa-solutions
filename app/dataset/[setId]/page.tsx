@@ -1,10 +1,29 @@
+import getAllDataSet from "@/actions/getAllDataSet";
+import getAllDatasetProblems from "@/actions/getAllDatasetProblems";
 import Blind75 from "@/components/pages/Blind75";
+import { notFound } from "next/navigation";
 
+//revalidate every 3600 seconds
+export const revalidate = 3600;
+
+//dynamic params true -- "[id]"
+export const dynamicParams = true;
+
+export async function generateStaticParams() {
+	const datasets = await getAllDataSet();
+	return datasets;
+}
 // eslint-disable-next-line  @typescript-eslint/no-explicit-any
 const Page = async ({ params }: any) => {
 	const { setId } = await params;
 
-	return <Blind75 setId={setId} />;
+	const problems = await getAllDatasetProblems(setId);
+
+	if (problems.length === 0) {
+		return notFound();
+	}
+
+	return <Blind75 problems={problems} />;
 };
 
 export default Page;
