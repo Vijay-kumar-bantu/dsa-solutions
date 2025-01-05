@@ -2,9 +2,10 @@
 
 import { motion } from "framer-motion";
 import { Code2, Brain, ArrowRight } from "lucide-react";
-import { redirect } from "next/navigation";
+import { useRouter } from "next/navigation";
 
 export default function Home() {
+	const router = useRouter();
 	return (
 		<div className="min-h-screen bg-gray-50 dark:bg-gray-900">
 			{/* Hero Section */}
@@ -31,7 +32,7 @@ export default function Home() {
 					<motion.button
 						whileHover={{ scale: 1.05 }}
 						whileTap={{ scale: 0.95 }}
-						onClick={() => redirect("/dataset/blind75")}
+						onClick={() => router.push("/dataset/blind75")}
 						className="mt-8 px-8 py-3 bg-primary-600 hover:bg-primary-700 text-white rounded-lg font-medium flex items-center space-x-2 mx-auto"
 					>
 						<span>Start Learning</span>
@@ -60,7 +61,7 @@ export default function Home() {
 						<motion.button
 							whileHover={{ scale: 1.05 }}
 							whileTap={{ scale: 0.95 }}
-							onClick={() => redirect("/dataset/blind75")}
+							onClick={() => router.push("/dataset/blind75")}
 							className="mt-8 px-6 py-2 border-2 border-primary-600 dark:border-primary-400 text-primary-600 dark:text-primary-400 rounded-lg font-medium hover:bg-primary-50 dark:hover:bg-gray-700 transition-colors"
 						>
 							View Solutions
