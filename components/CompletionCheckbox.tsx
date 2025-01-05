@@ -2,6 +2,7 @@ import React from "react";
 import { Check } from "lucide-react";
 import { useAuth } from "../contexts/AuthContext";
 import { useCompletion } from "../contexts/CompletionContext";
+import { Loader } from "./Loader";
 
 interface CompletionCheckboxProps {
 	problemId: string;
@@ -10,11 +11,15 @@ interface CompletionCheckboxProps {
 export const CompletionCheckbox: React.FC<CompletionCheckboxProps> = ({
 	problemId,
 }) => {
-	const { isAuthenticated } = useAuth();
+	const { isAuthenticated, loading } = useAuth();
 	const { isCompleted, toggleCompletion } = useCompletion();
 	const completed = isCompleted(problemId);
 
 	if (!isAuthenticated) return null;
+
+	if (loading) {
+		return <Loader size="medium" />;
+	}
 
 	return (
 		<button

@@ -17,7 +17,7 @@ const CompletionContext = createContext<CompletionContextType | undefined>(
 export const CompletionProvider: React.FC<{ children: React.ReactNode }> = ({
 	children,
 }) => {
-	const { user } = useAuth();
+	const { user, setLoading } = useAuth();
 
 	const [completedProblems, setCompletedProblems] = useState<Set<string>>(
 		new Set()
@@ -28,6 +28,7 @@ export const CompletionProvider: React.FC<{ children: React.ReactNode }> = ({
 	}, [user?.completedProblems]);
 
 	const toggleCompletion = (problemId: string) => {
+		setLoading(true);
 		completedProblems.has(problemId)
 			? handleCompletion(user?.id || "", problemId, "remove").then(() => {
 					setCompletedProblems((prev) => {
@@ -35,6 +36,7 @@ export const CompletionProvider: React.FC<{ children: React.ReactNode }> = ({
 						newSet.delete(problemId);
 						return newSet;
 					});
+					setLoading(false);
 			  })
 			: handleCompletion(user?.id || "", problemId, "add").then(() => {
 					setCompletedProblems((prev) => {
@@ -42,6 +44,7 @@ export const CompletionProvider: React.FC<{ children: React.ReactNode }> = ({
 						newSet.add(problemId);
 						return newSet;
 					});
+					setLoading(false);
 			  });
 	};
 

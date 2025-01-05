@@ -24,6 +24,7 @@ interface AuthContextType {
 	logout: () => void;
 	isAuthenticated: boolean;
 	loading: boolean;
+	setLoading: (loading: boolean) => void;
 }
 
 const AuthContext = createContext<AuthContextType | undefined>(undefined);
@@ -111,6 +112,7 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({
 				logout,
 				isAuthenticated: !!user,
 				loading,
+				setLoading,
 			}}
 		>
 			{children}
