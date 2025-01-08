@@ -8,6 +8,8 @@ const addUser = async (username: string, email: string, password: string) => {
 	try {
 		const salt = await bcrypt.genSalt(Number(process.env.SALT) as number);
 		const hash = await bcrypt.hash(password, salt);
+		if (await prisma.user.findFirst({ where: { email: email } }))
+			return "Email already registered" as string;
 		await prisma.user.create({
 			data: {
 				username: username,
@@ -15,8 +17,8 @@ const addUser = async (username: string, email: string, password: string) => {
 				password: hash,
 			},
 		});
-	} catch (err) {
-		return false;
+	} catch (err: any) {
+		return err.message as string;
 	}
 	return true;
 };

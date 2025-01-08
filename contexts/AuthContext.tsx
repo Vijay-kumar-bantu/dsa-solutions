@@ -89,12 +89,13 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({
 		password: string
 	) => {
 		setLoading(true);
-		if (await addUser(username, email, password)) {
+		const data = await addUser(username, email, password);
+		if (typeof data == "boolean") {
 			setLoading(false);
 			alert("User profile created successfully");
 		} else {
 			setLoading(false);
-			throw new Error("something went wrong,Please try again later");
+			throw new Error(data);
 		}
 	};
 

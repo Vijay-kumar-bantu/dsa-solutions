@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { X } from "lucide-react";
 import { useAuth } from "../contexts/AuthContext";
+import passwordStrengthCheck from "@/utils/passwordStrengthCheck";
 
 interface LoginModalProps {
 	isOpen: boolean;
@@ -54,6 +55,11 @@ export const LoginModal: React.FC<LoginModalProps> = ({ isOpen, onClose }) => {
 					setError("Passwords do not match");
 					return;
 				}
+				const results = passwordStrengthCheck(formData.password);
+				if (results.isValid === false) {
+					setError(results.message);
+					return;
+				}
 				await register(formData.username, formData.email, formData.password);
 				setIsLogin(true);
 			}
@@ -83,7 +89,10 @@ export const LoginModal: React.FC<LoginModalProps> = ({ isOpen, onClose }) => {
 									{isLogin ? "Welcome back" : "Create account"}
 								</h2>
 								<button
-									onClick={onClose}
+									onClick={() => {
+										setIsLogin(true);
+										onClose();
+									}}
 									className="p-2 hover:bg-gray-100 dark:hover:bg-gray-700 rounded-full transition-colors"
 								>
 									<X className="w-5 h-5 text-gray-500" />
@@ -174,8 +183,9 @@ export const LoginModal: React.FC<LoginModalProps> = ({ isOpen, onClose }) => {
 								)}
 
 								<button
+									disabled={loading}
 									type="submit"
-									className="w-full py-3 px-4 bg-primary-600 hover:bg-primary-700 text-white rounded-lg font-medium transition-colors"
+									className="w-full py-3 px-4 bg-primary-600 hover:bg-primary-700 text-white rounded-lg font-medium transition-colors disabled:bg-primary-700 pointer"
 								>
 									{isLogin ? "Sign In" : "Create Account"}
 								</button>
