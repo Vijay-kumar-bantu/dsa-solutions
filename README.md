@@ -1,17 +1,44 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+## DSA solution
 
-## Getting Started
+A simple project where we can find solutions and explanations about DSA questions.
 
-First, run the development server:
+These list can be helpful to master the DSA concepts.
+
+## Authors
+
+- [@vijay-kumar-bantu](https://www.github.com/vijay-kumar-bantu)
+
+## Setup the project
+
+run the project with npm after installion of node_modules
+
+### Install the modules
+
+#### npm
 
 ```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
+  npm install --legacy-peer-deps
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+#### pnpm
+
+```bash
+  pnpm i
+```
+
+### Run the Project
+
+```bash
+  npm run dev
+```
+
+## 🚀 About Me
+
+This is Vijay Kumar Bantu.
+
+Working as a Fullstack developer.
+
+## 🔗 Links
+
+[![portfolio](https://img.shields.io/badge/my_portfolio-000?style=for-the-badge&logo=ko-fi&logoColor=white)](https://main-portfolio-five-alpha.vercel.app/)
+[![linkedin](https://img.shields.io/badge/linkedin-0A66C2?style=for-the-badge&logo=linkedin&logoColor=white)](https://www.linkedin.com/in/vijay-kumar-bantu/)
