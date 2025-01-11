@@ -9,7 +9,10 @@ export const metadata: Metadata = {
 	title: "DSA solutions",
 	description: "A website for DSA problems",
 	applicationName: "DSA solutions",
-	authors: [{ name: "Vijay Kumar Bantu" }],
+	authors: {
+		name: "Vijay Kumar Bantu",
+		url: "https://www.linkedin.com/in/vijay-kumar-bantu/",
+	},
 	keywords: [
 		"DSA",
 		"solutions",
