@@ -5,6 +5,8 @@ import { ProblemRow } from "./ProblemRow";
 import { Search } from "lucide-react";
 import { Problem } from "@/types";
 import getAllProblems from "@/actions/getAllProblems";
+import { useAuth } from "@/contexts/AuthContext";
+import LoadingScreen from "../LoadingScreen";
 
 interface ProblemListProps {
 	// eslint-disable-next-line  @typescript-eslint/no-explicit-any
@@ -14,16 +16,28 @@ interface ProblemListProps {
 export const ProblemList = ({ onEdit }: ProblemListProps) => {
 	const [problems, setProblems] = useState<Problem[]>([]);
 	const [search, setSearch] = useState("");
+	const [localLoading, setLocalLoading] = useState(false);
+	const { loading } = useAuth();
 
 	useEffect(() => {
-		//eslint-disable-next-line
-		//@ts-ignore
-		getAllProblems().then((data) => setProblems(data));
-	}, []);
+		if (!loading) {
+			setLocalLoading(true);
+			getAllProblems().then((data) => {
+				//eslint-disable-next-line
+				//@ts-ignore
+				setProblems(data);
+				setLocalLoading(false);
+			});
+		}
+	}, [loading]);
 
 	const filteredProblems = problems.filter((problem) =>
 		problem.title.toLowerCase().includes(search.toLowerCase())
 	);
+
+	if (localLoading) {
+		return <LoadingScreen />;
+	}
 
 	return (
 		<div className="bg-white dark:bg-gray-800 rounded-lg shadow">

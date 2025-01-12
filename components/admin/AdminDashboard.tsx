@@ -23,6 +23,7 @@ export const AdminDashboard = () => {
 						{(isAddingProblem || editingProblem) && (
 							<ProblemForm
 								problem={editingProblem}
+								isEditing={!!editingProblem}
 								onClose={() => {
 									setIsAddingProblem(false);
 									setEditingProblem(null);

@@ -6,13 +6,22 @@ import { Problem, Solution } from "@/types";
 import { SolutionsList } from "./solutions/SolutionsList";
 import { SolutionForm } from "./solutions/SolutionForm";
 import createProblem from "@/actions/createProblem";
+import updateProblem from "@/actions/updateProblem";
+import { useAuth } from "@/contexts/AuthContext";
+import LoadingScreen from "../LoadingScreen";
 
 interface ProblemFormProps {
 	problem?: Problem | null;
 	onClose: () => void;
+	isEditing: boolean;
 }
 
-export const ProblemForm = ({ problem, onClose }: ProblemFormProps) => {
+export const ProblemForm = ({
+	problem,
+	onClose,
+	isEditing,
+}: ProblemFormProps) => {
+	const { loading, setLoading } = useAuth();
 	const [formData, setFormData] = useState<Problem>({
 		id: problem?.id || "",
 		title: problem?.title || "",
@@ -31,15 +40,27 @@ export const ProblemForm = ({ problem, onClose }: ProblemFormProps) => {
 	const handleSubmit = async (e: React.FormEvent) => {
 		e.preventDefault();
 		// Handle form submission
+		setLoading(true);
 
-		if (!problem) {
-			if (await createProblem(formData)) {
-				alert("Problem created successfully");
+		if (isEditing) {
+			// Update existing problem
+			if (await updateProblem(formData)) {
+				alert("Problem updated successfully");
 				onClose();
 			} else {
-				alert("Failed to create problem");
+				alert("Failed to update problem");
+			}
+		} else {
+			if (!problem) {
+				if (await createProblem(formData)) {
+					alert("Problem created successfully");
+					onClose();
+				} else {
+					alert("Failed to create problem");
+				}
 			}
 		}
+		setLoading(false);
 	};
 
 	const handleSolutionSubmit = (solution: Solution) => {
@@ -61,6 +82,8 @@ export const ProblemForm = ({ problem, onClose }: ProblemFormProps) => {
 		setShowSolutionForm(false);
 		setEditingSolution(null);
 	};
+
+	if (loading) return <LoadingScreen />;
 
 	return (
 		<div className="fixed inset-0 bg-black/50 flex items-center justify-center p-4 z-50">
@@ -102,10 +125,11 @@ export const ProblemForm = ({ problem, onClose }: ProblemFormProps) => {
 							<input
 								type="text"
 								value={formData.id}
+								disabled={isEditing}
 								onChange={(e) =>
 									setFormData({ ...formData, id: e.target.value })
 								}
-								className="w-full px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-lg focus:ring-2 focus:ring-primary-500 dark:bg-gray-700 dark:text-white"
+								className="w-full px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-lg focus:ring-2 focus:ring-primary-500 dark:bg-gray-700 dark:text-white disabled:opacity-50 disabled:cursor-not-allowed"
 								required
 							/>
 						</div>
