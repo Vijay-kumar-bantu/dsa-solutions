@@ -3,6 +3,8 @@ import getAllDatasetProblems from "@/actions/getAllDatasetProblems";
 import Blind75 from "@/components/pages/Blind75";
 import { notFound } from "next/navigation";
 
+//this is data set page
+
 //revalidate every 3600 seconds
 export const revalidate = 3600;
 
