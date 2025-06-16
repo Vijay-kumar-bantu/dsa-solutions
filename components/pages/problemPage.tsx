@@ -31,7 +31,7 @@ const ProblemPage = ({ problem }: PageProps) => {
 						<p>{problem.description}</p>
 
 						<div className="mt-8 flex gap-5">
-							<LeetCodeButton url={problem.youtubeUrl} variant="youtube" />
+							{/* <LeetCodeButton url={problem.youtubeUrl} variant="youtube" /> */}
 							<LeetCodeButton url={problem.leetcodeUrl} />
 						</div>
 
