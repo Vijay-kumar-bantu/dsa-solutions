@@ -1,4 +1,4 @@
-import getAllProblemId from "@/actions/getAllProblemId";
+// import getAllProblemId from "@/actions/getAllProblemId";
 import getProblem from "@/actions/getProblem";
 import ProblemPage from "@/components/pages/problemPage";
 import { notFound } from "next/navigation";
@@ -10,8 +10,8 @@ export const revalidate = 3600;
 export const dynamicParams = true;
 
 export async function generateStaticParams() {
-	const Ids = await getAllProblemId();
-	return Ids;
+	// const Ids = await getAllProblemId();
+	return [{ id: "two-sum" }];
 }
 
 // eslint-disable-next-line  @typescript-eslint/no-explicit-any
