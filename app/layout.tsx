@@ -4,6 +4,7 @@ import { AuthProvider } from "@/contexts/AuthContext";
 import { CompletionProvider } from "@/contexts/CompletionContext";
 import { Header } from "@/components/Header";
 import { Footer } from "@/components/Footer";
+import { SpeedInsights } from "@vercel/speed-insights/next";
 
 export const metadata: Metadata = {
 	title: "DSA solutions",
@@ -38,6 +39,7 @@ export default function RootLayout({
 						<Footer />
 					</CompletionProvider>
 				</AuthProvider>
+				<SpeedInsights />
 			</body>
 		</html>
 	);

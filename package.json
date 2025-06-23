@@ -7,11 +7,14 @@
 		"build": "next build",
 		"start": "next start",
 		"lint": "next lint",
-		"setup": "npm install --legacy-peer-deps && prisma generate"
+		"setup": "npm install --legacy-peer-deps && prisma generate",
+		"prisma:studio": "prisma studio",
+		"prisma:generate": "prisma generate"
 	},
 	"dependencies": {
 		"@prisma/client": "^6.1.0",
 		"@tailwindcss/typography": "^0.5.15",
+		"@vercel/speed-insights": "^1.2.0",
 		"bcryptjs": "^2.4.3",
 		"framer-motion": "^11.15.0",
 		"jsonwebtoken": "^9.0.2",
