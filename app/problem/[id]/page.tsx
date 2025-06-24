@@ -3,8 +3,8 @@ import getProblem from "@/actions/getProblem";
 import ProblemPage from "@/components/pages/problemPage";
 import { notFound } from "next/navigation";
 
-//revalidate every 3600 seconds
-export const revalidate = 3600;
+// revalidate every 3600 seconds
+// export const revalidate = 24 * 3600;
 
 //dynamic params true -- "[id]"
 export const dynamicParams = true;
