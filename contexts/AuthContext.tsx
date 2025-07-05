@@ -34,10 +34,11 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({
 }) => {
 	const [user, setUser] = useState<User | null>(null);
 	const [loading, setLoading] = useState(false);
-	const token = global.document?.cookie?.split("token=")[1];
+	const token = global.document?.cookie?.split("loginKey=")[1];
 
 	//setting user data after refresh
 	const gettingData = async () => {
+		console.log("token", global.document?.cookie?.split("loginKey="));
 		if (!!token) {
 			setLoading(true);
 			const user: any = await decodToken(token);
@@ -70,7 +71,7 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({
 			throw new Error(data);
 		} else {
 			const { user, token } = data;
-			global.document.cookie = `token=${token};`;
+			global.document.cookie = `loginKey=${token};`;
 			setUser({
 				id: user.id,
 				username: user.username,
@@ -100,7 +101,7 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({
 	};
 
 	const logout = () => {
-		global.document.cookie = "token=;";
+		global.document.cookie = "loginKey=;";
 		setUser(null);
 	};
 

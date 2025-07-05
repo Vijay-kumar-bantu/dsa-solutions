@@ -5,7 +5,7 @@ import { notFound } from "next/navigation";
 
 //this is data set page
 
-//revalidate every 3600 seconds
+//revalidate every 24 hours
 export const revalidate = 86400;
 
 //dynamic params true -- "[id]"

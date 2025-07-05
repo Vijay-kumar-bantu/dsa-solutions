@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
-import { X } from "lucide-react";
+import { X, Eye, EyeOff } from "lucide-react";
 import { useAuth } from "../contexts/AuthContext";
 import passwordStrengthCheck from "@/utils/passwordStrengthCheck";
 
@@ -12,6 +12,7 @@ interface LoginModalProps {
 export const LoginModal: React.FC<LoginModalProps> = ({ isOpen, onClose }) => {
 	const { login, register, loading } = useAuth();
 	const [isLogin, setIsLogin] = useState(true);
+	const [showpassword, setShowPassword] = useState<boolean>(false);
 	const [formData, setFormData] = useState({
 		username: "",
 		email: "",
@@ -71,6 +72,10 @@ export const LoginModal: React.FC<LoginModalProps> = ({ isOpen, onClose }) => {
 
 	const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
 		setFormData({ ...formData, [e.target.name]: e.target.value });
+	};
+
+	const handleShowPassword = () => {
+		setShowPassword(!showpassword);
 	};
 
 	return (
@@ -144,7 +149,7 @@ export const LoginModal: React.FC<LoginModalProps> = ({ isOpen, onClose }) => {
 									/>
 								</div>
 
-								<div>
+								<div className="relative">
 									<label
 										htmlFor="password"
 										className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1"
@@ -152,7 +157,7 @@ export const LoginModal: React.FC<LoginModalProps> = ({ isOpen, onClose }) => {
 										Password
 									</label>
 									<input
-										type="password"
+										type={showpassword ? "text" : "password"}
 										id="password"
 										name="password"
 										value={formData.password}
@@ -160,10 +165,21 @@ export const LoginModal: React.FC<LoginModalProps> = ({ isOpen, onClose }) => {
 										className="w-full px-4 py-2 rounded-lg border border-gray-300 dark:border-gray-600 focus:ring-2 focus:ring-primary-500 dark:bg-gray-700 dark:text-white"
 										required
 									/>
+									{showpassword ? (
+										<EyeOff
+											className="text-black dark:text-gray-300 absolute top-8 right-2 z-20 cursor-pointer"
+											onClick={handleShowPassword}
+										/>
+									) : (
+										<Eye
+											className="text-black dark:text-gray-300 absolute top-8 right-2 z-20 cursor-pointer"
+											onClick={handleShowPassword}
+										/>
+									)}
 								</div>
 
 								{!isLogin && (
-									<div>
+									<div className="relative">
 										<label
 											htmlFor="confirmPassword"
 											className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1"
@@ -171,7 +187,7 @@ export const LoginModal: React.FC<LoginModalProps> = ({ isOpen, onClose }) => {
 											Confirm Password
 										</label>
 										<input
-											type="password"
+											type={showpassword ? "text" : "password"}
 											id="confirmPassword"
 											name="confirmPassword"
 											value={formData.confirmPassword}
@@ -179,6 +195,17 @@ export const LoginModal: React.FC<LoginModalProps> = ({ isOpen, onClose }) => {
 											className="w-full px-4 py-2 rounded-lg border border-gray-300 dark:border-gray-600 focus:ring-2 focus:ring-primary-500 dark:bg-gray-700 dark:text-white"
 											required
 										/>
+										{showpassword ? (
+											<EyeOff
+												className="text-black dark:text-gray-300 absolute top-8 right-2 z-20 cursor-pointer"
+												onClick={handleShowPassword}
+											/>
+										) : (
+											<Eye
+												className="text-black dark:text-gray-300 absolute top-8 right-2 z-20 cursor-pointer"
+												onClick={handleShowPassword}
+											/>
+										)}
 									</div>
 								)}
 

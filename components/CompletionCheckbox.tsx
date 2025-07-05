@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import { Check } from "lucide-react";
 import { useAuth } from "../contexts/AuthContext";
 import { useCompletion } from "../contexts/CompletionContext";
@@ -11,19 +11,26 @@ interface CompletionCheckboxProps {
 export const CompletionCheckbox: React.FC<CompletionCheckboxProps> = ({
 	problemId,
 }) => {
-	const { isAuthenticated, loading } = useAuth();
+	const { isAuthenticated } = useAuth();
+	const [checkLoading, setCheckLoading] = useState<boolean>(false);
 	const { isCompleted, toggleCompletion } = useCompletion();
 	const completed = isCompleted(problemId);
 
 	if (!isAuthenticated) return null;
 
-	if (loading) {
+	if (checkLoading) {
 		return <Loader size="medium" />;
 	}
 
+	const handleAction = async () => {
+		setCheckLoading(true);
+		await toggleCompletion(problemId);
+		setCheckLoading(false);
+	};
+
 	return (
 		<button
-			onClick={() => toggleCompletion(problemId)}
+			onClick={handleAction}
 			className={`w-6 h-6 rounded border-2 flex items-center justify-center transition-colors
         ${
 					completed

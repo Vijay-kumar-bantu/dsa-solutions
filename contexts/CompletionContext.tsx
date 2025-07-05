@@ -17,7 +17,7 @@ const CompletionContext = createContext<CompletionContextType | undefined>(
 export const CompletionProvider: React.FC<{ children: React.ReactNode }> = ({
 	children,
 }) => {
-	const { user, setLoading } = useAuth();
+	const { user } = useAuth();
 
 	const [completedProblems, setCompletedProblems] = useState<Set<string>>(
 		new Set()
@@ -27,25 +27,26 @@ export const CompletionProvider: React.FC<{ children: React.ReactNode }> = ({
 		setCompletedProblems(new Set(user?.completedProblems));
 	}, [user?.completedProblems]);
 
-	const toggleCompletion = (problemId: string) => {
-		setLoading(true);
-		completedProblems.has(problemId)
-			? handleCompletion(user?.id || "", problemId, "remove").then(() => {
-					setCompletedProblems((prev) => {
-						const newSet = new Set(prev);
-						newSet.delete(problemId);
-						return newSet;
-					});
-					setLoading(false);
-			  })
-			: handleCompletion(user?.id || "", problemId, "add").then(() => {
-					setCompletedProblems((prev) => {
-						const newSet = new Set(prev);
-						newSet.add(problemId);
-						return newSet;
-					});
-					setLoading(false);
-			  });
+	const toggleCompletion = async (problemId: string) => {
+		if (completedProblems.has(problemId)) {
+			const res = await handleCompletion(user?.id || "", problemId, "remove");
+			if (res) {
+				setCompletedProblems((prev) => {
+					const newSet = new Set(prev);
+					newSet.delete(problemId);
+					return newSet;
+				});
+			}
+		} else {
+			const res = await handleCompletion(user?.id || "", problemId, "add");
+			if (res) {
+				setCompletedProblems((prev) => {
+					const newSet = new Set(prev);
+					newSet.add(problemId);
+					return newSet;
+				});
+			}
+		}
 	};
 
 	const isCompleted = (problemId: string) => {
