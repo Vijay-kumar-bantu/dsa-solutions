@@ -17,7 +17,7 @@ const CompletionContext = createContext<CompletionContextType | undefined>(
 export const CompletionProvider: React.FC<{ children: React.ReactNode }> = ({
 	children,
 }) => {
-	const { user, setLoading } = useAuth();
+	const { user } = useAuth();
 
 	const [completedProblems, setCompletedProblems] = useState<Set<string>>(
 		new Set()

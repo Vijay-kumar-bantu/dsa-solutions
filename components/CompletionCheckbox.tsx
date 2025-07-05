@@ -11,8 +11,8 @@ interface CompletionCheckboxProps {
 export const CompletionCheckbox: React.FC<CompletionCheckboxProps> = ({
 	problemId,
 }) => {
-	const { isAuthenticated, loading } = useAuth();
-	const [checkLoading, setCheckLoading] = useState<Boolean>(false);
+	const { isAuthenticated } = useAuth();
+	const [checkLoading, setCheckLoading] = useState<boolean>(false);
 	const { isCompleted, toggleCompletion } = useCompletion();
 	const completed = isCompleted(problemId);
 
