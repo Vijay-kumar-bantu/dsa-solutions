@@ -6,15 +6,22 @@ import { ProblemHeader } from "@/components/ProblemHeader";
 import { LeetCodeButton } from "@/components/LeetCodeButton";
 import { ApproachAccordion } from "@/components/ApproachAccordion";
 import { Problem } from "@/types";
+import { useRouter } from "next/navigation";
+import Link from "next/link";
+import { ChevronLeft, ChevronRight } from "lucide-react";
 
 interface PageProps {
 	problem: Problem;
+	prev: { id: string; title: string } | null;
+	next: { id: string; title: string } | null;
 }
 
-const ProblemPage = ({ problem }: PageProps) => {
+const ProblemPage = ({ problem, prev, next }: PageProps) => {
 	const [openApproachIndex, setOpenApproachIndex] = useState<number | null>(
 		null
 	);
+
+	const router = useRouter();
 
 	return (
 		<div className="min-h-screen bg-gray-50 dark:bg-gray-900 py-12">
@@ -50,6 +57,27 @@ const ProblemPage = ({ problem }: PageProps) => {
 						))}
 					</div>
 				</motion.div>
+				<div className="mt-4 flex gap-5 justify-between items-center bg-white dark:bg-gray-800 p-4 rounded-lg shadow-sm">
+					<Link
+						href={`/problem/${prev?.id ?? ""}`}
+						className="flex items-center"
+					>
+						{prev && <ChevronLeft className="text-black dark:text-white" />}
+						<p className="text-sm text-black dark:text-white font-bold">
+							{prev?.title ?? ""}
+						</p>
+					</Link>
+
+					<Link
+						href={`/problem/${next?.id ?? ""}`}
+						className="flex items-center"
+					>
+						<p className="text-sm text-black font-bold dark:text-white">
+							{next?.title ?? ""}
+						</p>
+						{next && <ChevronRight className="text-black dark:text-white" />}
+					</Link>
+				</div>
 			</div>
 		</div>
 	);
