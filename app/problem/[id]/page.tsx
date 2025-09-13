@@ -17,12 +17,14 @@ export async function generateStaticParams() {
 // eslint-disable-next-line  @typescript-eslint/no-explicit-any
 const Page = async ({ params }: any) => {
 	const { id } = await params;
-	const problem = await getProblem(id);
+	const data = await getProblem(id);
 
-	if (!problem) {
+	if (!data) {
 		return notFound();
 	}
-	return <ProblemPage problem={problem} />;
+	return (
+		<ProblemPage problem={data.problem} prev={data.prev} next={data.next} />
+	);
 };
 
 export default Page;
