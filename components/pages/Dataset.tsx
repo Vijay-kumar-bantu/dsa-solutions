@@ -5,6 +5,7 @@ import { motion, AnimatePresence } from "framer-motion";
 import { ChevronDown, ChevronUp } from "lucide-react";
 import Link from "next/link";
 import { CompletionCheckbox } from "../CompletionCheckbox";
+import { useAuth } from "@/contexts/AuthContext";
 
 interface Problem {
 	id: string;
@@ -17,16 +18,23 @@ interface PageProps {
 	problems: Problem[];
 }
 
-const Blind75 = ({ problems }: PageProps) => {
+const Dataset = ({ problems }: PageProps) => {
 	const categories = Array.from(new Set(problems.map((p) => p.category)));
 	const [openCategory, setOpenCategory] = useState<string | null>(null);
+	const { isAuthenticated } = useAuth();
 
 	return (
 		<div className="min-h-screen bg-gray-50 dark:bg-gray-900 py-12">
-			<div className="container mx-auto px-4">
-				<h1 className="text-3xl font-bold text-gray-900 dark:text-white mb-8">
+			<div className="container mx-auto md:max-w-[80%] lg:max-w-[65%] px-4">
+				<h1 className="text-3xl font-bold text-gray-900 dark:text-white mb-4">
 					Blind 75 Solutions
 				</h1>
+
+				{!isAuthenticated && (
+					<span className="text-red-500 mb-4 block">
+						*Please log in to track your completions
+					</span>
+				)}
 
 				<div className="space-y-4">
 					{categories.map((category) => (
@@ -105,4 +113,4 @@ const Blind75 = ({ problems }: PageProps) => {
 	);
 };
 
-export default Blind75;
+export default Dataset;
