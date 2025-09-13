@@ -14,8 +14,11 @@ function MarkCompleteButton({ problemId }: { problemId: string }) {
 
 	const handleAction = async () => {
 		setCheckLoading(true);
-		await toggleCompletion(problemId);
-		setCheckLoading(false);
+		try {
+			await toggleCompletion(problemId);
+		} finally {
+			setCheckLoading(false);
+		}
 	};
 	return (
 		<motion.button
