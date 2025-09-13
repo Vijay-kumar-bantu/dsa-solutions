@@ -6,7 +6,6 @@ import { ProblemHeader } from "@/components/ProblemHeader";
 import { LeetCodeButton } from "@/components/LeetCodeButton";
 import { ApproachAccordion } from "@/components/ApproachAccordion";
 import { Problem } from "@/types";
-import { useRouter } from "next/navigation";
 import Link from "next/link";
 import { ChevronLeft, ChevronRight } from "lucide-react";
 import MarkCompleteButton from "../MarkCompleteButton";
