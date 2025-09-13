@@ -9,6 +9,9 @@ import { Problem } from "@/types";
 import { useRouter } from "next/navigation";
 import Link from "next/link";
 import { ChevronLeft, ChevronRight } from "lucide-react";
+import MarkCompleteButton from "../MarkCompleteButton";
+import { useAuth } from "@/contexts/AuthContext";
+import { useCompletion } from "@/contexts/CompletionContext";
 
 interface PageProps {
 	problem: Problem;
@@ -21,7 +24,9 @@ const ProblemPage = ({ problem, prev, next }: PageProps) => {
 		null
 	);
 
-	const router = useRouter();
+	const { isAuthenticated } = useAuth();
+	const { isCompleted } = useCompletion();
+	const completed = isCompleted(problem.id);
 
 	return (
 		<div className="min-h-screen bg-gray-50 dark:bg-gray-900 py-12">
@@ -31,6 +36,11 @@ const ProblemPage = ({ problem, prev, next }: PageProps) => {
 					animate={{ opacity: 1, y: 0 }}
 					className="bg-white dark:bg-gray-800 rounded-lg shadow-sm p-6 lg:p-8"
 				>
+					{completed && (
+						<div className="mb-4 p-2 bg-green-100 text-green-950 dark:text-green-800 rounded-lg">
+							<p className="font-semibold">You have completed this problem!</p>
+						</div>
+					)}
 					<ProblemHeader problem={problem} />
 
 					<div className="prose dark:prose-invert max-w-none">
@@ -55,6 +65,10 @@ const ProblemPage = ({ problem, prev, next }: PageProps) => {
 								}
 							/>
 						))}
+					</div>
+
+					<div className="mt-6 flex justify-end space-x-4">
+						{isAuthenticated && <MarkCompleteButton problemId={problem.id} />}
 					</div>
 				</motion.div>
 				<div className="mt-4 flex gap-5 justify-between items-center bg-white dark:bg-gray-800 p-4 rounded-lg shadow-sm">
