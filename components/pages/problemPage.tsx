@@ -70,27 +70,29 @@ const ProblemPage = ({ problem, prev, next }: PageProps) => {
 						{isAuthenticated && <MarkCompleteButton problemId={problem.id} />}
 					</div>
 				</motion.div>
-				<div className="mt-4 flex gap-5 justify-between items-center bg-white dark:bg-gray-800 p-4 rounded-lg shadow-sm">
-					<Link
-						href={`/problem/${prev?.id ?? ""}`}
-						className="flex items-center"
-					>
-						{prev && <ChevronLeft className="text-black dark:text-white" />}
-						<p className="text-sm text-black dark:text-white font-bold">
-							{prev?.title ?? ""}
-						</p>
-					</Link>
+				{(prev || next) && (
+					<div className="mt-4 flex gap-5 justify-between items-center bg-white dark:bg-gray-800 p-4 rounded-lg shadow-sm">
+						<Link
+							href={`/problem/${prev?.id ?? ""}`}
+							className="flex items-center"
+						>
+							{prev && <ChevronLeft className="text-black dark:text-white" />}
+							<p className="text-sm text-black dark:text-white font-bold">
+								{prev?.title ?? ""}
+							</p>
+						</Link>
 
-					<Link
-						href={`/problem/${next?.id ?? ""}`}
-						className="flex items-center"
-					>
-						<p className="text-sm text-black font-bold dark:text-white">
-							{next?.title ?? ""}
-						</p>
-						{next && <ChevronRight className="text-black dark:text-white" />}
-					</Link>
-				</div>
+						<Link
+							href={`/problem/${next?.id ?? ""}`}
+							className="flex items-center"
+						>
+							<p className="text-sm text-black font-bold dark:text-white">
+								{next?.title ?? ""}
+							</p>
+							{next && <ChevronRight className="text-black dark:text-white" />}
+						</Link>
+					</div>
+				)}
 			</div>
 		</div>
 	);
