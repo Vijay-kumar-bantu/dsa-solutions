@@ -11,6 +11,7 @@ import { ChevronLeft, ChevronRight } from "lucide-react";
 import MarkCompleteButton from "../MarkCompleteButton";
 import { useAuth } from "@/contexts/AuthContext";
 import { useCompletion } from "@/contexts/CompletionContext";
+import BreadCrumbs from "../BreadCrumbs";
 
 interface PageProps {
 	problem: Problem;
@@ -26,10 +27,18 @@ const ProblemPage = ({ problem, prev, next }: PageProps) => {
 	const { isAuthenticated } = useAuth();
 	const { isCompleted } = useCompletion();
 	const completed = isCompleted(problem.id);
+	const dataset = problem.dataset[0] || null;
+
+	const links = [
+		{ name: "Home", href: "/" },
+		{ name: `${dataset ?? "Problems"}`, href: `/dataset/${dataset ?? ""}` },
+		{ name: problem.title, href: `/problem/${problem.id}` },
+	];
 
 	return (
 		<div className="min-h-screen bg-gray-50 dark:bg-gray-900 py-12">
 			<div className="container mx-auto px-4 max-w-4xl">
+				<BreadCrumbs links={links} />
 				<motion.div
 					initial={{ opacity: 0, y: 20 }}
 					animate={{ opacity: 1, y: 0 }}
