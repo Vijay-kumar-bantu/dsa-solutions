@@ -1,8 +1,16 @@
-## DSA solution
+## DSA solutions
 
 A simple project where we can find solutions and explanations about DSA questions.
 
 These list can be helpful to master the DSA concepts.
+
+## 📸 Screenshots
+
+Here are some screenshots of the project:
+
+- ![Home Page](./screenshots/landing.png)
+- ![Question List](./screenshots/dataset.png)
+- ![Solution View](./screenshots/problem.png)
 
 ## Authors
 
